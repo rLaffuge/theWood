@@ -1,0 +1,22 @@
+{
+  "name": "thewood",
+  "version": "1.0.0",
+  "description": "site de e-commerce",
+  "main": "index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rLaffuge/theWood.git"
+  },
+  "keywords": [
+    "php"
+  ],
+  "author": ["Rémy Laffuge", "Adrien Bon"],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rLaffuge/theWood/issues"
+  },
+  "homepage": "https://github.com/rLaffuge/theWood#readme"
+}
