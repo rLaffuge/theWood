@@ -23,8 +23,46 @@ session_start();
 
     </head>
     <body>
-        <h1>Body</h1>
+        <nav class="navbar navbar-inverse">
+        	<a class="navbar-brand" href="#">The Wood</a>
+        	<ul class="nav navbar-nav">
+        		<li>
+        			<a href="index.php?route=home">Home</a>
+        		</li>
+        		<li>
+        			<a href="index.php?route=home">Panier</a>
+        		</li>
+                <li>
+                    <a href="index.php?route=home">Admin</a>
+                </li>
+        	</ul>
+        </nav>
 
+        <!-- Contenu du site-->
+        <div class="container-fluid">
+            <?php
+            $route = filter_input(INPUT_GET, 'route');
+            if(isset($route)){
+                switch ($route){
+                    case "accueil":
+                        include("back/route/home.php");
+                        break;
+                    case "admin":
+                        include("back/route/admin.php");
+                        break;
+                    case "panier":
+                        include("back/route/panier.php");
+                        break;
+                    default:
+                        include("back/route/404.php");
+                }
+            }else{
+                include("back/route/home.php");
+            }
+
+
+            ?>
+        </div>
         <!-- jQuery -->
         <script src="front\js\jquery.js"></script>
         <!-- Bootstrap -->
