@@ -17,8 +17,9 @@ class ConnexionDb
     public function __construct()
     {
         // Récupération des informations de connexion contenu dans le fichier database.ini
-        $iniFile = filter_input('/back/config/database.ini');
+        $iniFile = filter_input(INPUT_SERVER,"DOCUMENT_ROOT")."/back/config/database.ini";
 
+        var_dump($iniFile);
         if(file_exists($iniFile)){
             $this->db = parse_ini_file($iniFile);
         }
@@ -30,6 +31,11 @@ class ConnexionDb
             $ex->getLine() . ' : ' . $ex->getMessage();
             die($message);
         }
+    }
+
+    public function getConnexion()
+    {
+        return $this->connexion;
     }
 }
 
