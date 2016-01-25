@@ -13,10 +13,17 @@
   "keywords": [
     "php"
   ],
-  "author": ["Rémy Laffuge", "Adrien Bon"],
+  "author": [
+    "Rémy Laffuge",
+    "Adrien Bon"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/rLaffuge/theWood/issues"
   },
-  "homepage": "https://github.com/rLaffuge/theWood#readme"
+  "homepage": "https://github.com/rLaffuge/theWood#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.0"
+  }
 }
