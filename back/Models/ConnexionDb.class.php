@@ -25,7 +25,7 @@ class ConnexionDb
         }
 
         try{
-            $this->connexion= new PDO($this->db['db_connexion'], $this->db['db_login'], $this->db['db_password'], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
+            $this->connexion= new PDO("mysql:host=localhost;dbname=genielogiciel",'root','', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
         }catch(Exception $ex){
             $message = 'Erreur PDO dans ' . $ex->getFile() . ', ligne ' .
             $ex->getLine() . ' : ' . $ex->getMessage();

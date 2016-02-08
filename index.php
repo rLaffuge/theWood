@@ -18,7 +18,8 @@ session_start();
         <title>The Wood</title>
 
         <!-- Bootstrap -->
-        <link href="front\css\bootstrap.min.css" rel="stylesheet">
+        <link href="./front/css/bootstrap.min.css" rel="stylesheet">
+        <link href="./front/css/style.css" rel="stylesheet">
 
 
     </head>
@@ -57,7 +58,8 @@ session_start();
 
 
         <!-- Contenu du site-->
-        <div class="container-fluid">
+        <div id="corps" class="container">
+            <div class="row">
             <?php
             $route = filter_input(INPUT_GET, 'route');
             if(isset($route)){
@@ -69,6 +71,9 @@ session_start();
                         include("back/route/commande.admin.php");
                         break;
                     case "produit":
+                        include("back/route/produit.php");
+                        break;
+                    case "produitadmin":
                         include("back/route/produit.admin.php");
                         break;
                     case "panier":
@@ -86,6 +91,7 @@ session_start();
 
 
             ?>
+            </div>
         </div>
         <!-- jQuery -->
         <script src="front\js\jquery.js"></script>
