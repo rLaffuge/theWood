@@ -15,7 +15,7 @@ session_start();
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Site de vente">
-        <title>Page Title</title>
+        <title>The Wood</title>
 
         <!-- Bootstrap -->
         <link href="front\css\bootstrap.min.css" rel="stylesheet">
@@ -23,20 +23,38 @@ session_start();
 
     </head>
     <body>
-        <nav class="navbar navbar-inverse">
-        	<a class="navbar-brand" href="#">The Wood</a>
-        	<ul class="nav navbar-nav">
-        		<li>
-        			<a href="index.php?route=accueil">Accueil</a>
-        		</li>
-        		<li>
-        			<a href="index.php?route=panier">Panier</a>
-        		</li>
-                <li>
-                    <a href="index.php?route=admin">Admin</a>
-                </li>
-        	</ul>
-        </nav>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.php?route=accueil">The Wood</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="index.php?route=accueil">Accueil</a>
+                    </li>
+                    <li>
+                        <a href="index.php?route=panier">Panier</a>
+                    </li>
+                    <li>
+                        <a href="index.php?route=admin">Admin</a>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="text" placeholder="Login" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control">
+                    </div>
+                    <a href="index.php?route=inscription" class="btn btn-primary">Inscription</a>
+                    <button type="submit" class="btn btn-success">Connexion</button>
+                </form>
+            </div><!--/.navbar-collapse -->
+        </div>
+    </nav>
+
 
         <!-- Contenu du site-->
         <div class="container-fluid">
@@ -45,19 +63,25 @@ session_start();
             if(isset($route)){
                 switch ($route){
                     case "accueil":
-                        include("back/route/home.php");
+                        include("back/route/acceuil.php");
                         break;
-                    case "admin":
-                        include("back/route/admin.php");
+                    case "commande":
+                        include("back/route/commande.admin.php");
+                        break;
+                    case "produit":
+                        include("back/route/produit.admin.php");
                         break;
                     case "panier":
                         include("back/route/panier.php");
+                        break;
+                    case "inscription":
+                        include("back/route/inscription.php");
                         break;
                     default:
                         include("back/route/404.php");
                 }
             }else{
-                include("back/route/home.php");
+                include("back/route/acceuil.php");
             }
 
 
