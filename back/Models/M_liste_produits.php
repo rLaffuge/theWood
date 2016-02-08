@@ -14,7 +14,7 @@ $requete_produits = "SELECT * FROM produit";
 
 $res_produits = $db->getConnexion()->prepare($requete_produits);
 
-$res_produits-> execute();
+$res_produits->execute();
 
 $res_produits->fetchAll(PDO::FETCH_OBJ);
 
