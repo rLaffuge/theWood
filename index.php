@@ -27,13 +27,13 @@ session_start();
         	<a class="navbar-brand" href="#">The Wood</a>
         	<ul class="nav navbar-nav">
         		<li>
-        			<a href="index.php?route=home">Home</a>
+        			<a href="index.php?route=accueil">Accueil</a>
         		</li>
         		<li>
-        			<a href="index.php?route=home">Panier</a>
+        			<a href="index.php?route=panier">Panier</a>
         		</li>
                 <li>
-                    <a href="index.php?route=home">Admin</a>
+                    <a href="index.php?route=admin">Admin</a>
                 </li>
         	</ul>
         </nav>

@@ -2,11 +2,13 @@
 
     function getProduits(){
 
-        require "../config/pdo.php";
+        require "ConnexionDb.class.php";
+
+        $db = new ConnexionDb();
 
         $requete_produits = "SELECT * FROM produit";
 
-        $res_produits = $pdo->prepare($requete_produits);
+        $res_produits = $db->getConnexion()->prepare($requete_produits);
 
         $res_produits-> execute();
 
@@ -16,11 +18,13 @@
 
     function getProduit($id)
     {
-        require "../config/pdo.php";
+        require "ConnexionDb.class.php";
+
+        $db = new ConnexionDb();
 
         $requete_produit = "SELECT * FROM produit WHERE produit.id_produit = :id;";
 
-        $res_produit = $pdo->prepare($requete_produit);
+        $res_produit = $db->getConnexion()->prepare($requete_produit);
 
         $res_produit->bindParam(":id", $id, PDO::PARAM_INT);
 
@@ -40,7 +44,8 @@
 
     function insertProduit($id,$nom_produit,$prix,$description,$quantite,$fiche,$type,$theme,$tags = array())
     {
-        $requete_produit = "INSERT INTO produit VALUES (:id,:nom_produit,:prix,:description,:)"
+        $db = new ConnexionDb();
+        $requete_produit = "INSERT INTO produit VALUES (:id,:nom_produit,:prix,:description,:)";
     }
 
 
