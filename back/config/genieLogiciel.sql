@@ -1,388 +1,451 @@
--- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 4.4.7
+-- http://www.phpmyadmin.net
 --
--- Host: localhost    Database: genieLogiciel
--- ------------------------------------------------------
--- Server version	5.6.17
+-- Client :  localhost
+-- Généré le :  Sam 13 Février 2016 à 14:48
+-- Version du serveur :  5.5.44-MariaDB
+-- Version de PHP :  5.5.31
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `genieLogiciel`
+-- Base de données :  `genieLogiciel`
 --
-
-/*!40000 DROP DATABASE IF EXISTS `genieLogiciel`*/;
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `genieLogiciel` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
+DROP DATABASE `genieLogiciel`;
+CREATE DATABASE IF NOT EXISTS `genieLogiciel` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `genieLogiciel`;
 
+-- --------------------------------------------------------
+
 --
--- Table structure for table `commande`
+-- Structure de la table `commande`
 --
 
-DROP TABLE IF EXISTS `commande`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `commande` (
+CREATE TABLE IF NOT EXISTS `commande` (
   `idCommande` int(11) NOT NULL,
   `idUser` int(11) NOT NULL,
-  `prix` int(11) DEFAULT NULL,
-  `dateCommande` date DEFAULT NULL,
-  PRIMARY KEY (`idCommande`),
-  UNIQUE KEY `commande_idCommande_uindex` (`idCommande`),
-  UNIQUE KEY `idUser_UNIQUE` (`idUser`),
-  CONSTRAINT `fk_commande_user` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE
+  `prix` int(11) NOT NULL,
+  `dateCommande` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `commande`
+-- Structure de la table `commande_produit`
 --
 
-LOCK TABLES `commande` WRITE;
-/*!40000 ALTER TABLE `commande` DISABLE KEYS */;
-/*!40000 ALTER TABLE `commande` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `commande_produit`
---
-
-DROP TABLE IF EXISTS `commande_produit`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `commande_produit` (
+CREATE TABLE IF NOT EXISTS `commande_produit` (
   `idProduit` int(11) NOT NULL DEFAULT '0',
   `idCommande` int(11) NOT NULL DEFAULT '0',
-  `quantite` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idProduit`,`idCommande`),
-  KEY `fk_commandeProduit_commande` (`idCommande`),
-  CONSTRAINT `fk_commandeProduit_commande` FOREIGN KEY (`idCommande`) REFERENCES `commande` (`idCommande`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_commandeProduit_produit` FOREIGN KEY (`idProduit`) REFERENCES `produit` (`idProduit`) ON DELETE CASCADE ON UPDATE CASCADE
+  `quantite` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `commande_produit`
+-- Structure de la table `domaine`
 --
 
-LOCK TABLES `commande_produit` WRITE;
-/*!40000 ALTER TABLE `commande_produit` DISABLE KEYS */;
-/*!40000 ALTER TABLE `commande_produit` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `domaine`
---
-
-DROP TABLE IF EXISTS `domaine`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `domaine` (
+CREATE TABLE IF NOT EXISTS `domaine` (
   `idDomaine` int(11) NOT NULL,
-  `libelleDomaine` varchar(25) DEFAULT NULL,
-  PRIMARY KEY (`idDomaine`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `libelleDomaine` varchar(25) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `domaine`
+-- Contenu de la table `domaine`
 --
 
-LOCK TABLES `domaine` WRITE;
-/*!40000 ALTER TABLE `domaine` DISABLE KEYS */;
-INSERT INTO `domaine` VALUES (0,'autre'),(1,'audio'),(2,'video'),(3,'lecture'),(4,'electromenager'),(5,'electronique');
-/*!40000 ALTER TABLE `domaine` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `domaine` (`idDomaine`, `libelleDomaine`) VALUES
+(1, 'audio'),
+(2, 'video'),
+(3, 'lecture'),
+(4, 'electromenager'),
+(5, 'electronique'),
+(6, 'autre');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `droit`
+-- Structure de la table `droit`
 --
 
-DROP TABLE IF EXISTS `droit`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `droit` (
+CREATE TABLE IF NOT EXISTS `droit` (
   `idDroit` int(11) NOT NULL,
-  `niveau` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idDroit`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `niveau` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `droit`
+-- Contenu de la table `droit`
 --
 
-LOCK TABLES `droit` WRITE;
-/*!40000 ALTER TABLE `droit` DISABLE KEYS */;
-INSERT INTO `droit` VALUES (1,1),(2,2);
-/*!40000 ALTER TABLE `droit` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `droit` (`idDroit`, `niveau`) VALUES
+(1, 1),
+(2, 2);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `fiche`
+-- Structure de la table `imageproduit`
 --
 
-DROP TABLE IF EXISTS `fiche`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fiche` (
-  `idFiche` int(11) NOT NULL,
-  `idProduit` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idFiche`),
-  KEY `fk_fiche_produit` (`idProduit`),
-  CONSTRAINT `fk_fiche_produit` FOREIGN KEY (`idProduit`) REFERENCES `produit` (`idProduit`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `fiche`
---
-
-LOCK TABLES `fiche` WRITE;
-/*!40000 ALTER TABLE `fiche` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fiche` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `imageproduit`
---
-
-DROP TABLE IF EXISTS `imageproduit`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `imageproduit` (
+CREATE TABLE IF NOT EXISTS `imageproduit` (
   `idImageProduit` int(11) NOT NULL,
-  `cheminImage` varchar(25) DEFAULT NULL,
-  `idProduit` int(11) DEFAULT NULL,
-  `idFiche` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idImageProduit`),
-  KEY `fk_imageProduit_produit` (`idProduit`),
-  KEY `fk_imageProduit_fiche` (`idFiche`),
-  CONSTRAINT `fk_imageProduit_fiche` FOREIGN KEY (`idFiche`) REFERENCES `fiche` (`idFiche`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_imageProduit_produit` FOREIGN KEY (`idProduit`) REFERENCES `produit` (`idProduit`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `cheminImage` varchar(25) NOT NULL,
+  `idProduit` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `imageproduit`
+-- Contenu de la table `imageproduit`
 --
 
-LOCK TABLES `imageproduit` WRITE;
-/*!40000 ALTER TABLE `imageproduit` DISABLE KEYS */;
-/*!40000 ALTER TABLE `imageproduit` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `imageproduit` (`idImageProduit`, `cheminImage`, `idProduit`) VALUES
+(1, './back/images/Desert.jpg', 1);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `produit`
+-- Structure de la table `produit`
 --
 
-DROP TABLE IF EXISTS `produit`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `produit` (
+CREATE TABLE IF NOT EXISTS `produit` (
   `idProduit` int(11) NOT NULL,
-  `nomProduit` varchar(25) DEFAULT NULL,
-  `prixProduit` float DEFAULT NULL,
-  `description` varchar(50) DEFAULT NULL,
-  `stock` int(11) DEFAULT NULL,
-  `idTheme` int(11) DEFAULT NULL,
-  `idFiche` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idProduit`),
-  KEY `fk_produit_theme` (`idTheme`),
-  KEY `fk_produit_Fiche` (`idFiche`),
-  CONSTRAINT `fk_produit_Fiche` FOREIGN KEY (`idFiche`) REFERENCES `fiche` (`idFiche`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_produit_theme` FOREIGN KEY (`idTheme`) REFERENCES `theme` (`idTheme`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `nomProduit` varchar(25) NOT NULL,
+  `prixProduit` float NOT NULL,
+  `description` varchar(50) NOT NULL,
+  `stock` int(11) NOT NULL,
+  `idTheme` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `produit`
+-- Contenu de la table `produit`
 --
 
-LOCK TABLES `produit` WRITE;
-/*!40000 ALTER TABLE `produit` DISABLE KEYS */;
-/*!40000 ALTER TABLE `produit` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `produit` (`idProduit`, `nomProduit`, `prixProduit`, `description`, `stock`, `idTheme`) VALUES
+(1, 'test', 5.99, 'test de produit', 5, 1);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `produit_tag`
+-- Structure de la table `produit_tag`
 --
 
-DROP TABLE IF EXISTS `produit_tag`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `produit_tag` (
+CREATE TABLE IF NOT EXISTS `produit_tag` (
   `idProduit` int(11) NOT NULL DEFAULT '0',
-  `idTag` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`idProduit`,`idTag`),
-  KEY `fk_produitTag_tag` (`idTag`),
-  CONSTRAINT `fk_produitTag_tag` FOREIGN KEY (`idTag`) REFERENCES `tag` (`idTag`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_produitTag_produit` FOREIGN KEY (`idProduit`) REFERENCES `produit` (`idProduit`) ON DELETE CASCADE ON UPDATE CASCADE
+  `idTag` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `produit_tag`
+-- Structure de la table `tag`
 --
 
-LOCK TABLES `produit_tag` WRITE;
-/*!40000 ALTER TABLE `produit_tag` DISABLE KEYS */;
-/*!40000 ALTER TABLE `produit_tag` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tag`
---
-
-DROP TABLE IF EXISTS `tag`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tag` (
+CREATE TABLE IF NOT EXISTS `tag` (
   `idTag` int(11) NOT NULL,
   `libelleTag` varchar(25) DEFAULT NULL,
-  `idTypeTag` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idTag`),
-  KEY `fk_tag_typeTag` (`idTypeTag`),
-  CONSTRAINT `fk_tag_typeTag` FOREIGN KEY (`idTypeTag`) REFERENCES `typetag` (`idTypeTag`) ON DELETE CASCADE ON UPDATE CASCADE
+  `idTypeTag` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `tag`
+-- Structure de la table `theme`
 --
 
-LOCK TABLES `tag` WRITE;
-/*!40000 ALTER TABLE `tag` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tag` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `theme`
---
-
-DROP TABLE IF EXISTS `theme`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `theme` (
+CREATE TABLE IF NOT EXISTS `theme` (
   `idTheme` int(11) NOT NULL,
-  `libelleTheme` varchar(25) DEFAULT NULL,
-  `idDomaine` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idTheme`),
-  KEY `fk_theme_domaine` (`idDomaine`),
-  CONSTRAINT `fk_theme_domaine` FOREIGN KEY (`idDomaine`) REFERENCES `domaine` (`idDomaine`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `libelleTheme` varchar(25) NOT NULL,
+  `idDomaine` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `theme`
+-- Contenu de la table `theme`
 --
 
-LOCK TABLES `theme` WRITE;
-/*!40000 ALTER TABLE `theme` DISABLE KEYS */;
-INSERT INTO `theme` VALUES (1,'cd',1),(2,'dvd',2),(3,'blu-ray',2),(4,'roman',3),(5,'e-book',3),(6,'nouvelle',3),(7,'ordinateur',5),(8,'appareil photo',5),(9,'lave linge',4),(10,'aspirateur',4);
-/*!40000 ALTER TABLE `theme` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `theme` (`idTheme`, `libelleTheme`, `idDomaine`) VALUES
+(1, 'cd', 1),
+(2, 'dvd', 2),
+(3, 'blu-ray', 2),
+(4, 'roman', 3),
+(5, 'e-book', 3),
+(6, 'nouvelle', 3),
+(7, 'ordinateur', 5),
+(8, 'appareil photo', 5),
+(9, 'lave linge', 4),
+(10, 'aspirateur', 4);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `typetag`
+-- Structure de la table `typetag`
 --
 
-DROP TABLE IF EXISTS `typetag`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `typetag` (
+CREATE TABLE IF NOT EXISTS `typetag` (
   `idTypeTag` int(11) NOT NULL,
-  `libelleTypeTag` varchar(25) DEFAULT NULL,
-  PRIMARY KEY (`idTypeTag`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `libelleTypeTag` varchar(25) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `typetag`
+-- Contenu de la table `typetag`
 --
 
-LOCK TABLES `typetag` WRITE;
-/*!40000 ALTER TABLE `typetag` DISABLE KEYS */;
-INSERT INTO `typetag` VALUES (1,'age'),(2,'sexe'),(3,'support');
-/*!40000 ALTER TABLE `typetag` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `typetag` (`idTypeTag`, `libelleTypeTag`) VALUES
+(1, 'age'),
+(2, 'sexe'),
+(3, 'support');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `typeuser`
+-- Structure de la table `typeuser`
 --
 
-DROP TABLE IF EXISTS `typeuser`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `typeuser` (
+CREATE TABLE IF NOT EXISTS `typeuser` (
   `idTypeUser` int(11) NOT NULL,
-  `libelle` varchar(25) DEFAULT NULL,
-  `idDroit` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idTypeUser`),
-  KEY `fk_typeUser_droit` (`idDroit`),
-  CONSTRAINT `fk_typeUser_droit` FOREIGN KEY (`idDroit`) REFERENCES `droit` (`idDroit`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `typeuser`
---
-
-LOCK TABLES `typeuser` WRITE;
-/*!40000 ALTER TABLE `typeuser` DISABLE KEYS */;
-INSERT INTO `typeuser` VALUES (1,'admin',1),(2,'user',2);
-/*!40000 ALTER TABLE `typeuser` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user`
---
-
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user` (
-  `idUser` int(11) NOT NULL AUTO_INCREMENT,
-  `login` varchar(25) NOT NULL,
-  `mdp` varchar(1000) DEFAULT NULL,
-  `idTypeUser` int(11) DEFAULT '2',
-  `nom` varchar(30) DEFAULT NULL,
-  `prenom` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`idUser`),
-  UNIQUE KEY `idUser_UNIQUE` (`idUser`),
-  UNIQUE KEY `login_UNIQUE` (`login`),
-  KEY `fk_user_typeUser` (`idTypeUser`),
-  CONSTRAINT `fk_user_typeUser` FOREIGN KEY (`idTypeUser`) REFERENCES `typeuser` (`idTypeUser`) ON DELETE CASCADE ON UPDATE CASCADE
+  `libelle` varchar(25) NOT NULL,
+  `idDroit` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Contenu de la table `typeuser`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'rayms','$2y$10$pySPADvrGAGoq2Pom2h/meZkcCDwQdQSARgMU8etIim9aEr.4jOwy',1,'Laffuge','Rémy'),(2,'admin','$2y$10$pySPADvrGAGoq2Pom2h/meZkcCDwQdQSARgMU8etIim9aEr.4jOwy',1,'admin','admin');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+INSERT INTO `typeuser` (`idTypeUser`, `libelle`, `idDroit`) VALUES
+(1, 'admin', 1),
+(2, 'user', 2);
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `idUser` int(11) NOT NULL,
+  `login` varchar(25) NOT NULL,
+  `mdp` varchar(1000) NOT NULL,
+  `idTypeUser` int(11) NOT NULL DEFAULT '2',
+  `nom` varchar(30) NOT NULL,
+  `prenom` varchar(30) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `user`
+--
+
+INSERT INTO `user` (`idUser`, `login`, `mdp`, `idTypeUser`, `nom`, `prenom`) VALUES
+(1, 'rayms', '$2y$10$pySPADvrGAGoq2Pom2h/meZkcCDwQdQSARgMU8etIim9aEr.4jOwy', 1, 'Laffuge', 'Rémy'),
+(2, 'admin', '$2y$10$pySPADvrGAGoq2Pom2h/meZkcCDwQdQSARgMU8etIim9aEr.4jOwy', 1, 'admin', 'admin');
+
+--
+-- Index pour les tables exportées
+--
+
+--
+-- Index pour la table `commande`
+--
+ALTER TABLE `commande`
+  ADD PRIMARY KEY (`idCommande`),
+  ADD UNIQUE KEY `commande_idCommande_uindex` (`idCommande`),
+  ADD UNIQUE KEY `idUser_UNIQUE` (`idUser`);
+
+--
+-- Index pour la table `commande_produit`
+--
+ALTER TABLE `commande_produit`
+  ADD PRIMARY KEY (`idProduit`,`idCommande`),
+  ADD KEY `fk_commandeProduit_commande` (`idCommande`);
+
+--
+-- Index pour la table `domaine`
+--
+ALTER TABLE `domaine`
+  ADD PRIMARY KEY (`idDomaine`);
+
+--
+-- Index pour la table `droit`
+--
+ALTER TABLE `droit`
+  ADD PRIMARY KEY (`idDroit`);
+
+--
+-- Index pour la table `imageproduit`
+--
+ALTER TABLE `imageproduit`
+  ADD PRIMARY KEY (`idImageProduit`),
+  ADD KEY `fk_imageProduit_produit` (`idProduit`);
+
+--
+-- Index pour la table `produit`
+--
+ALTER TABLE `produit`
+  ADD PRIMARY KEY (`idProduit`),
+  ADD KEY `fk_produit_theme` (`idTheme`);
+
+--
+-- Index pour la table `produit_tag`
+--
+ALTER TABLE `produit_tag`
+  ADD PRIMARY KEY (`idProduit`,`idTag`),
+  ADD KEY `fk_produitTag_tag` (`idTag`);
+
+--
+-- Index pour la table `tag`
+--
+ALTER TABLE `tag`
+  ADD PRIMARY KEY (`idTag`),
+  ADD KEY `fk_tag_typeTag` (`idTypeTag`);
+
+--
+-- Index pour la table `theme`
+--
+ALTER TABLE `theme`
+  ADD PRIMARY KEY (`idTheme`),
+  ADD KEY `fk_theme_domaine` (`idDomaine`);
+
+--
+-- Index pour la table `typetag`
+--
+ALTER TABLE `typetag`
+  ADD PRIMARY KEY (`idTypeTag`);
+
+--
+-- Index pour la table `typeuser`
+--
+ALTER TABLE `typeuser`
+  ADD PRIMARY KEY (`idTypeUser`),
+  ADD KEY `fk_typeUser_droit` (`idDroit`);
+
+--
+-- Index pour la table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`idUser`),
+  ADD UNIQUE KEY `login_UNIQUE` (`login`),
+  ADD KEY `fk_user_typeUser` (`idTypeUser`);
+
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `commande`
+--
+ALTER TABLE `commande`
+  MODIFY `idCommande` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `domaine`
+--
+ALTER TABLE `domaine`
+  MODIFY `idDomaine` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT pour la table `droit`
+--
+ALTER TABLE `droit`
+  MODIFY `idDroit` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT pour la table `imageproduit`
+--
+ALTER TABLE `imageproduit`
+  MODIFY `idImageProduit` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT pour la table `produit`
+--
+ALTER TABLE `produit`
+  MODIFY `idProduit` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT pour la table `tag`
+--
+ALTER TABLE `tag`
+  MODIFY `idTag` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `theme`
+--
+ALTER TABLE `theme`
+  MODIFY `idTheme` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT pour la table `typetag`
+--
+ALTER TABLE `typetag`
+  MODIFY `idTypeTag` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT pour la table `typeuser`
+--
+ALTER TABLE `typeuser`
+  MODIFY `idTypeUser` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT pour la table `user`
+--
+ALTER TABLE `user`
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- Contraintes pour les tables exportées
+--
+
+--
+-- Contraintes pour la table `commande`
+--
+ALTER TABLE `commande`
+  ADD CONSTRAINT `fk_commande_user` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `commande_produit`
+--
+ALTER TABLE `commande_produit`
+  ADD CONSTRAINT `fk_commandeProduit_commande` FOREIGN KEY (`idCommande`) REFERENCES `commande` (`idCommande`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_commandeProduit_produit` FOREIGN KEY (`idProduit`) REFERENCES `produit` (`idProduit`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `imageproduit`
+--
+ALTER TABLE `imageproduit`
+  ADD CONSTRAINT `fk_imageProduit_produit` FOREIGN KEY (`idProduit`) REFERENCES `produit` (`idProduit`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `produit`
+--
+ALTER TABLE `produit`
+  ADD CONSTRAINT `fk_produit_theme` FOREIGN KEY (`idTheme`) REFERENCES `theme` (`idTheme`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `produit_tag`
+--
+ALTER TABLE `produit_tag`
+  ADD CONSTRAINT `fk_produitTag_tag` FOREIGN KEY (`idTag`) REFERENCES `tag` (`idTag`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_produitTag_produit` FOREIGN KEY (`idProduit`) REFERENCES `produit` (`idProduit`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `tag`
+--
+ALTER TABLE `tag`
+  ADD CONSTRAINT `fk_tag_typeTag` FOREIGN KEY (`idTypeTag`) REFERENCES `typetag` (`idTypeTag`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `theme`
+--
+ALTER TABLE `theme`
+  ADD CONSTRAINT `fk_theme_domaine` FOREIGN KEY (`idDomaine`) REFERENCES `domaine` (`idDomaine`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `typeuser`
+--
+ALTER TABLE `typeuser`
+  ADD CONSTRAINT `fk_typeUser_droit` FOREIGN KEY (`idDroit`) REFERENCES `droit` (`idDroit`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `fk_user_typeUser` FOREIGN KEY (`idTypeUser`) REFERENCES `typeuser` (`idTypeUser`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2016-02-08 17:24:29
