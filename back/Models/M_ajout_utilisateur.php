@@ -5,7 +5,8 @@
  * Date: 08/02/2016
  * Time: 15:18
  */
-include("ConnexionDb.class.php");
+
+require "ConnexionDb.class.php";
 
 function ajouter_utilisateur($utilisateur){
     $db = new ConnexionDb();
@@ -22,3 +23,5 @@ function ajouter_utilisateur($utilisateur){
     $stmt->bindParam(':mdp', $utilisateur['mdp'], PDO::PARAM_STR);
     $stmt->execute();
 }
+
+?>

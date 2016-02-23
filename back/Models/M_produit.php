@@ -6,7 +6,7 @@
  * Time: 15:07
  */
 
-require "ConnexionDb.class.php";
+require_once "ConnexionDb.class.php";
 
 $id = $_GET["id"];
 

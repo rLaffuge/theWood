@@ -7,6 +7,8 @@
  */
 
 session_start();
+include $_SERVER["DOCUMENT_ROOT"]."/theWood/back/Controllers/C_accueil.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +37,47 @@ session_start();
                     <li>
                         <a href="index.php?route=accueil">Accueil</a>
                     </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produits <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.php?route=produits">Tous les produits</a></li>
+                            <?php
+
+                                foreach($domaines as $d)
+                                {
+                                    if(empty($d->themes))
+                                    {
+                            ?>
+                                        <li><a href="index.php?route=produits&domaine=<?php echo $d->libelleDomaine; ?>"><?php echo $d->libelleDomaine; ?></a></li>
+                            <?php
+                                    }
+                                    else
+                                    {
+                             ?>
+                                        <li class="dropdown-submenu">
+                                            <a tabindex="-1" href="index.php?route=produits&domaine=<?php echo $d->libelleDomaine; ?>"><?php echo $d->libelleDomaine; ?></a>
+                                            <ul class="dropdown-menu">
+                                                <?php
+
+                                                    foreach($d->themes as $t)
+                                                    {
+                                                ?>
+                                                        <li><a href="index.php?route=produits&theme=<?php echo $t->libelleTheme; ?>"><?php echo $t->libelleTheme; ?></a></li>
+                                                <?php
+
+                                                    }
+
+                                                ?>
+                                            </ul>
+                                        </li>
+                            <?php
+                                    }
+                                }
+
+                            ?>
+
+                        </ul>
+                    </li>
                     <li>
                         <a href="index.php?route=panier">Panier</a>
                     </li>
@@ -55,7 +98,7 @@ session_start();
             </div><!--/.navbar-collapse -->
         </div>
     </nav>
-
+    
 
         <!-- Contenu du site-->
         <div id="corps" class="container">
@@ -65,10 +108,13 @@ session_start();
             if(isset($route)){
                 switch ($route){
                     case "accueil":
-                        include("back/route/acceuil.php");
+                        include("back/route/accueil.php");
                         break;
                     case "commande":
                         include("back/route/commande.admin.php");
+                        break;
+                    case "produits":
+                        include("back/route/produits.php");
                         break;
                     case "produit":
                         include("back/route/produit.php");
@@ -86,13 +132,14 @@ session_start();
                         include("back/route/404.php");
                 }
             }else{
-                include("back/route/acceuil.php");
+                include("back/route/accueil.php");
             }
 
 
             ?>
             </div>
         </div>
+
         <!-- jQuery -->
         <script src="front\js\jquery.js"></script>
         <!-- Bootstrap -->
