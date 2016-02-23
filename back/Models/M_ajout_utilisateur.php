@@ -5,7 +5,7 @@
  * Date: 08/02/2016
  * Time: 15:18
  */
-include("ConnexionDb.class.php");
+require_once $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Models/ConnexionDb.class.php";
 
 function ajouter_utilisateur($utilisateur){
     $db = new ConnexionDb();

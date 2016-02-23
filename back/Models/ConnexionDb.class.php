@@ -18,7 +18,7 @@ class ConnexionDb
     {
         // Récupération des informations de connexion contenu dans le fichier database.ini
 
-        $iniFile = "./back/config/database.ini";
+        $iniFile = $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/config/database.ini";
 
         if(file_exists($iniFile)){
             $this->db = parse_ini_file($iniFile);
