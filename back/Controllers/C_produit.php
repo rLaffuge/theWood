@@ -1,6 +1,7 @@
 <?php
 
-    if(isset($_GET["id"]) && is_int(intval($_GET["id"])))
+
+    if(isset($_GET["id"]) && intval($_GET["id"])!==0)
     {
         include("./back/Models/M_produit.php");
         include("./front/views/V_produit.php");

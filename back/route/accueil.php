@@ -6,7 +6,7 @@
  * Time: 17:13
  */
 
-    include("./back/Controllers/C_liste_produits.php");
+    include("./back/Controllers/C_accueil.php");
 
 ?>
 

@@ -19,7 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `genieLogiciel`
 --
-DROP DATABASE `genieLogiciel`;
 CREATE DATABASE IF NOT EXISTS `genieLogiciel` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `genieLogiciel`;
 

@@ -6,7 +6,7 @@
  * Time: 15:05
  */
 
-    require "ConnexionDb.class.php";
+    require_once "ConnexionDb.class.php";
 
     $db = new ConnexionDb();
 
