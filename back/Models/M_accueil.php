@@ -31,8 +31,4 @@
         $d->themes = $res_theme->fetchAll(PDO::FETCH_OBJ);
     }
 
-    /*echo "<pre>";
-    var_dump($domaines);
-    echo "</pre>";*/
-
 ?>

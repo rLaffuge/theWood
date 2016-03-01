@@ -17,13 +17,28 @@
                                     domaine.libelleDomaine
                              FROM produit
                              INNER JOIN theme ON produit.idTheme = theme.idTheme
-                             INNER JOIN domaine ON theme.idDomaine = domaine.idDomaine;";
+                             INNER JOIN domaine ON theme.idDomaine = domaine.idDomaine";
 
     $requete_image = "SELECT imageproduit.cheminImage
-                          FROM imageproduit
-                          WHERE idProduit = :id;";
+                              FROM imageproduit
+                              WHERE idProduit = :id;";
+
+
+    if($critere != null)
+    {
+        $requete_produits.= " WHERE ".key($critere).".libelle".ucwords(key($critere))." = :critere;";
+    }
+    else
+    {
+        $requete_produits.=";";
+    }
 
     $res_produits = $db->getConnexion()->prepare($requete_produits);
+
+    if($critere != null)
+    {
+        $res_produits->bindParam(":critere",$critere[key($critere)],PDO::PARAM_STR);
+    }
 
     $res_produits->execute();
 

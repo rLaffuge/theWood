@@ -10,18 +10,25 @@
 
 <?php
 
-    foreach($produits as $p)
+    if(empty($produits))
     {
-
-        echo "<tr>";
-        echo "<td><a href=\"index.php?route=produit&id=".$p->idProduit."\"><img src=\"".$p->images[0]->cheminImage."\" class=\"img\"></a></td>";
-        echo "<td>".$p->nomProduit."</td>";
-        echo "<td>".$p->prixProduit."€</td>";
-        echo "<td>".$p->libelleTheme."</td>";
-        echo "<td>".$p->libelleDomaine."</td>";
-        echo "</tr>";
-
+        echo "<tr><td colspan='6'>Aucun ne produit ne correspond à ces critères</td></tr>";
     }
+    else
+    {
+        foreach ($produits as $p) {
+
+            echo "<tr>";
+            echo "<td><a href=\"index.php?route=produit&id=" . $p->idProduit . "\"><img src=\"" . $p->images[0]->cheminImage . "\" class=\"img\"></a></td>";
+            echo "<td>" . $p->nomProduit . "</td>";
+            echo "<td>" . $p->prixProduit . "€</td>";
+            echo "<td>" . $p->libelleTheme . "</td>";
+            echo "<td>" . $p->libelleDomaine . "</td>";
+            echo "</tr>";
+
+        }
+    }
+
 
 ?>
 

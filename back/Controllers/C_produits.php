@@ -6,6 +6,17 @@
  * Time: 15:44
  */
 
+    $critere = null;
+
+    if(isset($_GET["domaine"]))
+    {
+        $critere = array('domaine' => $_GET["domaine"]);
+    }
+    else if(isset($_GET["theme"]))
+    {
+        $critere = array('theme' => $_GET["theme"]);
+    }
+
     include $_SERVER["DOCUMENT_ROOT"]."/theWood/back/Models/M_liste_produits.php";
     include $_SERVER["DOCUMENT_ROOT"]."/theWood/front/views/V_liste_produits.php";
 

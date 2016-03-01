@@ -10,7 +10,6 @@ session_start();
 include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
 
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -21,6 +20,11 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
 
     <!-- Bootstrap -->
     <link href="./front/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./front/fonts/glyphicons-halflings-regular.eot">
+    <link href="./front/fonts/glyphicons-halflings-regular.svg">
+    <link href="./front/fonts/glyphicons-halflings-regular.woff">
+    <link href="./front/fonts/glyphicons-halflings-regular.woff2">
+    <link href="./front/fonts/glyphicons-halflings-regular.ttf">
     <link href="./front/css/style.css" rel="stylesheet">
 
 
