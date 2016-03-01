@@ -8,7 +8,6 @@
 
 session_start();
 include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -86,9 +85,25 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
                 <li>
                     <a href="index.php?route=panier">Panier</a>
                 </li>
-                <li>
-                    <a href="index.php?route=admin">Admin</a>
-                </li>
+                <?php if (isset($_SESSION['utilisateur'])) {
+
+                    if ($_SESSION['utilisateur']->niveau == '1') { ?>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header">Produits</li>
+                                <li><a href="index.php?route=ajout_produit">Ajouter produit</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-header">Utilisateurs</li>
+                                <li><a href="#">Separated link</a></li>
+                                <li><a href="#">One more separated link</a></li>
+                            </ul>
+                        </li>
+                        <?php
+                    }
+                } ?>
             </ul>
             <?php
             if (isset($_SESSION['utilisateur'])) {
@@ -100,18 +115,18 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
                 </div>
                 <?php
             } else {
-            ?>
-            <form class="navbar-form navbar-right" method="post"
-                  action="back/Controllers/C_connexion_utilisateur.php">
-                <div class="form-group">
-                    <input name="login" type="text" placeholder="Login" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input name="mdp" type="password" placeholder="Password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success">Connexion</button>
-                <a href="index.php?route=inscription" class="btn btn-primary">Inscription</a>
-            </form>
+                ?>
+                <form class="navbar-form navbar-right" method="post"
+                      action="back/Controllers/C_connexion_utilisateur.php">
+                    <div class="form-group">
+                        <input name="login" type="text" placeholder="Login" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input name="mdp" type="password" placeholder="Password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Connexion</button>
+                    <a href="index.php?route=inscription" class="btn btn-primary">Inscription</a>
+                </form>
             <?php } ?>
         </div><!--/.navbar-collapse -->
     </div>
@@ -137,8 +152,16 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
                 case "produit":
                     include("back/route/produit.php");
                     break;
-                case "produitadmin":
-                    include("back/route/produit.admin.php");
+                case "ajout_produit":
+                    if (isset($_SESSION['utilisateur']->niveau)) {
+                        if ($_SESSION['utilisateur']->niveau == 1) {
+                            include("back/route/produit.admin.php");
+                        }else{
+                            include("back/route/pasDroit.php");
+                        }
+                    }else{
+                        include("back/route/pasDroit.php");
+                    }
                     break;
                 case "panier":
                     include("back/route/panier.php");

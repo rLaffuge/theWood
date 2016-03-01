@@ -9,7 +9,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Models/ConnexionDb.class
 
 function ajouter_utilisateur($utilisateur){
     $db = new ConnexionDb();
-    $stmt = $db->getConnexion()->prepare("INSERT INTO user(nom,prenom,login,mdp) VALUES (:nom, :prenom, :login, :mdp);");
+    $stmt = $db->getConnexion()->prepare("INSERT INTO user(nom,prenom,login,mdp, idTypeUser) VALUES (:nom, :prenom, :login, :mdp, 2);");
 
     //Encodage du password
     if (isset($utilisateur['mdp'])) {
