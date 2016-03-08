@@ -33,7 +33,7 @@
                 <td><?php echo $produit->prixProduit; ?> €</td>
             </tr>
             <tr>
-                <td><input type="number" name="nb_produit" value="1" /></td>
+                <td><input class="form-control" type="number" name="nb_produit" value="1" /></td>
                 <td><button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-shopping-cart"></i> Ajouter au Panier</button></td>
             </tr>
         </table>

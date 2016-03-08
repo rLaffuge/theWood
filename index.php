@@ -8,6 +8,10 @@
 
 session_start();
 include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
+
+//Définition d'un token pour la sécurité'
+$connexion_token = md5(uniqid('Z85qP$9A5<8gxù', true));
+$_SESSION['connexion_token'] = $connexion_token;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -101,8 +105,7 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
                                 <li><a href="#">Something else here</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-header">Utilisateurs</li>
-                                <li><a href="#">Separated link</a></li>
-                                <li><a href="#">One more separated link</a></li>
+                                <li><a href="index.php?route=droits_utilisateurs">Gestion des droits</a></li>
                             </ul>
                         </li>
                         <?php
@@ -128,6 +131,7 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
                     <div class="form-group">
                         <input name="mdp" type="password" placeholder="Password" class="form-control">
                     </div>
+                    <input id="connexion_token" name="connexion_token" type="hidden" value="<?php echo $_SESSION['connexion_token'];?>">
                     <button type="submit" class="btn btn-success">Connexion</button>
                     <a href="index.php?route=inscription" class="btn btn-primary">Inscription</a>
                 </form>
@@ -158,19 +162,40 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
                     //Verification des droits
                     if (isset($_SESSION['utilisateur']->niveau)) {
                         if ($_SESSION['utilisateur']->niveau == 1) {
-                            include("back/route/produit.admin.php");
+                            include("./back/route/produit.admin.php");
                         }else{
-                            include("back/route/pasDroit.php");
+                            include("./back/route/pasDroit.php");
                         }
                     }else{
                         include("back/route/pasDroit.php");
                     }
                     break;
                 case "panier":
-                    include("back/route/panier.php");
+                    //Verification des droits
+                    if (isset($_SESSION['utilisateur']->niveau)) {
+                        if ($_SESSION['utilisateur']->niveau == 1) {
+                            include ("./back/route/pasDroit.php");
+                        }else{
+                            include ("./back/route/panier.php");
+                        }
+                    }else{
+                        include("back/route/panier.php");
+                    }
                     break;
                 case "inscription":
                     include("back/route/inscription.php");
+                    break;
+                case "droits_utilisateurs":
+                    //Verification des droits
+                    if (isset($_SESSION['utilisateur']->niveau)) {
+                        if ($_SESSION['utilisateur']->niveau == 1) {
+                            include("back/route/utilisateur.admin.php");
+                        }else{
+                            include("./back/route/pasDroit.php");
+                        }
+                    }else{
+                        include("back/route/pasDroit.php");
+                    }
                     break;
                 default:
                     include("back/route/404.php");
