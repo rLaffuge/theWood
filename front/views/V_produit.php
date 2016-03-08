@@ -22,7 +22,7 @@
         <table class="table table-bordered">
             <tr>
                 <td>Référence</td>
-                <td><?php echo $produit->idProduit; ?><input type="hidden" value="<?php echo $produit->idProduit; ?>"/></td>
+                <td><?php echo $produit->idProduit; ?><input type="hidden" name="id_produit" value="<?php echo $produit->idProduit; ?>"/></td>
             </tr>
             <tr>
                 <td>description</td>

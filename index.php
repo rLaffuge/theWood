@@ -185,6 +185,9 @@ $_SESSION['connexion_token'] = $connexion_token;
                 case "inscription":
                     include("back/route/inscription.php");
                     break;
+                case "ajout_panier":
+                    include("back/route/ajout_panier.php");
+                    break;
                 case "droits_utilisateurs":
                     //Verification des droits
                     if (isset($_SESSION['utilisateur']->niveau)) {
