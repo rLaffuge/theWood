@@ -8,8 +8,6 @@
 session_start();
 include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Models/M_ajout_produit.php";
 include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Models/M_ajout_image.php";
-
-var_dump($_POST);
 $target_dir = $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/images/";
 
 
