@@ -11,7 +11,7 @@
 
 <div class="panel panel-default">
     <div class="panel-body">
-        <form action="" method="post" role="form">
+        <form action="./back/Controllers/C_update_utilisateur.php" method="post" role="form">
             <legend>Droits utilisateurs</legend>
 
             <div class="form-group">
