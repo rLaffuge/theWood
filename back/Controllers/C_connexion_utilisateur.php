@@ -13,15 +13,23 @@ if ($_POST['connexion_token'] != $_SESSION['connexion_token']) {
     die('Formulaire invalide');
 }
 $utilisateur = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-$utilisateur_connected = connexion_utilisateur($utilisateur);
-if ($utilisateur_connected != false) {
-    $_SESSION['utilisateur'] = $utilisateur_connected;
+try{
+    $utilisateur_connected = connexion_utilisateur($utilisateur);
+    if ($utilisateur_connected != false) {
+        $_SESSION['utilisateur'] = $utilisateur_connected;
+        unset($_SESSION['connexion_token']);
+        header("location:../../index.php");
+    }else{
+        unset($_SESSION['connexion_token']);
+        die("L'utilisateur n'a pas été créé!");
+    }
+}catch(Exception $ex){
+    $message = 'Erreur PDO dans ' . $ex->getFile() . ', ligne ' .
+        $ex->getLine() . ' : ' . $ex->getMessage();
     unset($_SESSION['connexion_token']);
-    header("location:../../index.php");
-}else{
-    unset($_SESSION['connexion_token']);
-    header("location:../../index.php");
+    die($message);
 }
+
 
 
 

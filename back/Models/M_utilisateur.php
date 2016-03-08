@@ -29,3 +29,16 @@ function loadDroits(){
     $droits = $res_droit->fetchAll(PDO::FETCH_OBJ);
     return $droits;
 }
+
+function updateUtilisateur($idUser, $idDroit){
+    $db = new ConnexionDb();
+
+    $query = "UPDATE user SET idTypeUser=:idTypeDroit WHERE idUser=:idUser";
+
+    $res_update = $db->getConnexion()->prepare($query);
+
+    $res_update->bindParam(':idTypeDroit', $idDroit, PDO::PARAM_INT);
+    $res_update->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+
+    $res_update->execute();
+}
