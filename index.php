@@ -101,8 +101,9 @@ $_SESSION['connexion_token'] = $connexion_token;
                             <ul class="dropdown-menu">
                                 <li class="dropdown-header">Produits</li>
                                 <li><a href="index.php?route=ajout_produit">Ajouter produit</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-header">Commandes</li>
+                                <li><a href="index.php?route=commandes">Consulter commandes</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-header">Utilisateurs</li>
                                 <li><a href="index.php?route=droits_utilisateurs">Gestion des droits</a></li>
@@ -190,6 +191,18 @@ $_SESSION['connexion_token'] = $connexion_token;
                     if (isset($_SESSION['utilisateur']->niveau)) {
                         if ($_SESSION['utilisateur']->niveau == 1) {
                             include("back/route/utilisateur.admin.php");
+                        }else{
+                            include("./back/route/pasDroit.php");
+                        }
+                    }else{
+                        include("back/route/pasDroit.php");
+                    }
+                    break;
+                case "commandes":
+                    //Verification des droits
+                    if (isset($_SESSION['utilisateur']->niveau)) {
+                        if ($_SESSION['utilisateur']->niveau == 1) {
+                            include("back/route/commande.admin.php");
                         }else{
                             include("./back/route/pasDroit.php");
                         }
