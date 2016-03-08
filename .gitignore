@@ -2,3 +2,4 @@
 /node_modules
 /.gitignore
 /back/config/database.ini
+/back/images/*

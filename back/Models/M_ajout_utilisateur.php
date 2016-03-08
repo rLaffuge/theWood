@@ -21,4 +21,5 @@ function ajouter_utilisateur($utilisateur){
     $stmt->bindParam(':login', $utilisateur['login'], PDO::PARAM_STR);
     $stmt->bindParam(':mdp', $utilisateur['mdp'], PDO::PARAM_STR);
     $stmt->execute();
+
 }

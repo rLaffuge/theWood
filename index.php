@@ -26,6 +26,10 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
     <link href="./front/fonts/glyphicons-halflings-regular.ttf">
     <link href="./front/css/style.css" rel="stylesheet">
 
+    <!-- jQuery -->
+    <script src="front\js\jquery.js"></script>
+    <!-- Bootstrap -->
+    <script src="front\js\bootstrap.min.js"></script>
 
 </head>
 <body>
@@ -137,6 +141,7 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
 <div id="corps" class="container">
     <div class="row">
         <?php
+        //Définition des routes
         $route = filter_input(INPUT_GET, 'route');
         if (isset($route)) {
             switch ($route) {
@@ -153,6 +158,7 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
                     include("back/route/produit.php");
                     break;
                 case "ajout_produit":
+                    //Verification des droits
                     if (isset($_SESSION['utilisateur']->niveau)) {
                         if ($_SESSION['utilisateur']->niveau == 1) {
                             include("back/route/produit.admin.php");
@@ -179,9 +185,5 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
         ?>
     </div>
 </div>
-<!-- jQuery -->
-<script src="front\js\jquery.js"></script>
-<!-- Bootstrap -->
-<script src="front\js\bootstrap.min.js"></script>
 </body>
 </html>
