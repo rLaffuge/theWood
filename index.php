@@ -37,13 +37,10 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.php?route=accueil">The Wood</a>
+            <a class="navbar-brand" href="index.php?route=produits">The Wood</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>
-                    <a href="index.php?route=accueil">Accueil</a>
-                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Produits <span class="caret"></span></a>
@@ -85,6 +82,9 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
                         ?>
 
                     </ul>
+                </li>
+                <li>
+                    <a href="#modal-rech" data-toggle="modal">Recherche</a>
                 </li>
                 <li>
                     <a href="index.php?route=panier">Panier</a>
@@ -145,9 +145,6 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
         $route = filter_input(INPUT_GET, 'route');
         if (isset($route)) {
             switch ($route) {
-                case "accueil":
-                    include("back/route/accueil.php");
-                    break;
                 case "commande":
                     include("back/route/commande.admin.php");
                     break;
@@ -179,11 +176,59 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
                     include("back/route/404.php");
             }
         } else {
-            include("back/route/accueil.php");
+            include("back/route/produits.php");
         }
 
         ?>
     </div>
 </div>
+
+<div class="modal fade" id="modal-rech">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Recherche Avancée</h4>
+			</div>
+            <form method="post" action="index.php?route=produits">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="rech_produit">Produit : </label>
+                        <input type="text" id="rech_produit" name="rech_produit" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="rech_prix_min">Prix Min : </label>
+                        <input type="text" id="rech_prix_min" name="rech_prix_min" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="rech_prix_max">Prix Max : </label>
+                        <input type="text" id="rech_prix_max" name="rech_prix_max" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="rech_domaine">Domaine : </label>
+                        <select name="rech_domaine" id="rech_domaine" class="form-control">
+                            <option value="">---Domaine---</option>
+                            <?php foreach($domaines as $d){echo "<option value='$d->idDomaine'>$d->libelleDomaine</option>";} ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="rech_theme">Theme : </label>
+                        <select name="rech_theme" id="rech_theme" class="form-control">
+                        </select>
+                    </div>
+                    <div class="form-inline">
+                        <label for="rech_stock">Afficher uniquement les produits en stock : </label>
+                        <input type="checkbox" class="checkbox" id="rech_stock" name="rech_stock">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Rechercher</button>
+                </div>
+            </form>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="./front/js/app.js"></script>
 </body>
 </html>
