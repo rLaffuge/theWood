@@ -161,15 +161,23 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
                     //Verification des droits
                     if (isset($_SESSION['utilisateur']->niveau)) {
                         if ($_SESSION['utilisateur']->niveau == 1) {
-                            include("back/route/produit.admin.php");
+                            include("./back/route/produit.admin.php");
                         }else{
-                            include("back/route/pasDroit.php");
+                            include("./back/route/pasDroit.php");
                         }
                     }else{
                         include("back/route/pasDroit.php");
                     }
                     break;
                 case "panier":
+                    //Verification des droits
+                    if (isset($_SESSION['utilisateur']->niveau)) {
+                        if ($_SESSION['utilisateur']->niveau == 1) {
+                            include ("./back/route/pasDroit.php");
+                        }else{
+                            include ("./back/route/panier.php");
+                        }
+                    }
                     include("back/route/panier.php");
                     break;
                 case "inscription":
