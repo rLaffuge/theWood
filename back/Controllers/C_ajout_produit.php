@@ -10,29 +10,28 @@ include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Models/M_ajout_produit.php";
 include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Models/M_ajout_image.php";
 $target_dir = $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/images/";
 
-
 if (!isset($_POST['nom']) && !isset($_POST['theme']) && !isset($_POST['domaine']) && !isset($_POST['prix']) && !isset($_POST['stock']) && !isset($_POST['description']) && !isset($_POST['form_token'])) {
     $message = "Veuillez remplir tout les champs!";
-    die($message);
+    escape($message);
 } elseif ($_POST['form_token'] != $_SESSION['form_token']) {
     // On check le token
     $message = "Formulaire invalide!";
-    die($message);
+    escape($message);
 } elseif (strlen($_POST['nom']) < 4 || strlen($_POST['nom']) > 20) {
-    $message = "fef";
-    die($message);
+    $message = "Le nom doit être compris entre 4 et 20 caractères";
+    escape($message);
 } elseif (!is_numeric($_POST['prix'])) {
     $message = "Le prix doit etre un nombre à virgule";
-    die($message);
+    escape($message);
 } elseif (!is_numeric($_POST['stock'])) {
     $message = "Le Stock doit être un nombre!";
-    die($message);
+    escape($message);
 } elseif (!is_string($_POST['description'])) {
     $message = "Description invalide!";
-    die($message);
+    escape($message);
 } elseif (isset($_FILES['images']) && $_SESSION['MAX_FILE_SIZE'] != $_POST['MAX_FILE_SIZE']) {
     $message = "Un problème est survenu avec les images";
-    die($message);
+    escape($message);
 } else {
     $produit = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     var_dump($_FILES['images']);
@@ -46,13 +45,13 @@ if (!isset($_POST['nom']) && !isset($_POST['theme']) && !isset($_POST['domaine']
             $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
             $check = getimagesize($_FILES["images"]["tmp_name"][$i]);
             if ($check === false) {
-                die("Les fichier envoyé ne sont pas des images!");
+                escape("Les fichier envoyé ne sont pas des images!");
             }
             if ($_FILES["images"]["size"][$i] > $_SESSION["MAX_FILE_SIZE"]) {
-                die("Taille du fichier trop gande!");
+                escape("Taille du fichier trop gande!");
             }
             if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-                die("Seul les jpg, png, et jpeg sont acceptés!");
+                escape("Seul les jpg, png, et jpeg sont acceptés!");
             }
 
             try {
@@ -61,7 +60,7 @@ if (!isset($_POST['nom']) && !isset($_POST['theme']) && !isset($_POST['domaine']
             } catch (Exception $ex) {
                 $message = 'Erreur PDO dans ' . $ex->getFile() . ', ligne ' .
                     $ex->getLine() . ' : ' . $ex->getMessage();
-                die($message);
+                escape($message);
             }
             move_uploaded_file($_FILES["images"]["tmp_name"][$i], $target_dir . $image_unique . '.' . $imageFileType);
         }
@@ -73,6 +72,11 @@ if (!isset($_POST['nom']) && !isset($_POST['theme']) && !isset($_POST['domaine']
     } catch (Exception $ex) {
         $message = 'Erreur PDO dans ' . $ex->getFile() . ', ligne ' .
             $ex->getLine() . ' : ' . $ex->getMessage();
-        die($message);
+        escape($message);
     }
+}
+
+function escape($m){
+    unset($_SESSION['form_token']);
+    die($m);
 }

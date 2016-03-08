@@ -6,4 +6,4 @@
  * Time: 14:28
  */
 
-include $_SERVER["DOCUMENT_ROOT"] . "theWood/front/views/V_inscription.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/theWood/front/views/V_inscription.php";
