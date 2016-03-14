@@ -21,3 +21,5 @@ $res_stock->execute();
 $stock = $res_stock->fetch(PDO::FETCH_OBJ);
 
 $stock_produit = intval($stock->stock);
+
+?>

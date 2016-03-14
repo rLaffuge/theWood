@@ -12,7 +12,7 @@
 
     if(empty($produits))
     {
-        echo "<tr><td colspan='6'>Aucun ne produit ne correspond à ces critères</td></tr>";
+        echo "<tr><td colspan='6'>Aucun produit ne correspond à ces critères</td></tr>";
     }
     else
     {
@@ -28,7 +28,6 @@
 
         }
     }
-
 
 ?>
 

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.7
+-- version 4.5.0.2
 -- http://www.phpmyadmin.net
 --
--- Client :  localhost
--- Généré le :  Sam 13 Février 2016 à 14:48
--- Version du serveur :  5.5.44-MariaDB
--- Version de PHP :  5.5.31
+-- Client :  127.0.0.1
+-- Généré le :  Lun 14 Mars 2016 à 16:47
+-- Version du serveur :  10.0.17-MariaDB
+-- Version de PHP :  5.6.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,13 +14,14 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `genieLogiciel`
+-- Base de données :  `genielogiciel`
 --
-CREATE DATABASE IF NOT EXISTS `genieLogiciel` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `genieLogiciel`;
+DROP DATABASE `genielogiciel`;
+CREATE DATABASE IF NOT EXISTS `genielogiciel` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `genielogiciel`;
 
 -- --------------------------------------------------------
 
@@ -29,10 +30,13 @@ USE `genieLogiciel`;
 --
 
 CREATE TABLE IF NOT EXISTS `commande` (
-  `idCommande` int(11) NOT NULL,
+  `idCommande` int(11) NOT NULL AUTO_INCREMENT,
   `idUser` int(11) NOT NULL,
   `prix` int(11) NOT NULL,
-  `dateCommande` date NOT NULL
+  `dateCommande` date NOT NULL,
+  PRIMARY KEY (`idCommande`),
+  UNIQUE KEY `commande_idCommande_uindex` (`idCommande`),
+  UNIQUE KEY `idUser_UNIQUE` (`idUser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -44,7 +48,9 @@ CREATE TABLE IF NOT EXISTS `commande` (
 CREATE TABLE IF NOT EXISTS `commande_produit` (
   `idProduit` int(11) NOT NULL DEFAULT '0',
   `idCommande` int(11) NOT NULL DEFAULT '0',
-  `quantite` int(11) NOT NULL
+  `quantite` int(11) NOT NULL,
+  PRIMARY KEY (`idProduit`,`idCommande`),
+  KEY `fk_commandeProduit_commande` (`idCommande`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -54,8 +60,9 @@ CREATE TABLE IF NOT EXISTS `commande_produit` (
 --
 
 CREATE TABLE IF NOT EXISTS `domaine` (
-  `idDomaine` int(11) NOT NULL,
-  `libelleDomaine` varchar(25) NOT NULL
+  `idDomaine` int(11) NOT NULL AUTO_INCREMENT,
+  `libelleDomaine` varchar(25) NOT NULL,
+  PRIMARY KEY (`idDomaine`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
@@ -77,8 +84,9 @@ INSERT INTO `domaine` (`idDomaine`, `libelleDomaine`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `droit` (
-  `idDroit` int(11) NOT NULL,
-  `niveau` int(11) NOT NULL
+  `idDroit` int(11) NOT NULL AUTO_INCREMENT,
+  `niveau` int(11) NOT NULL,
+  PRIMARY KEY (`idDroit`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
@@ -96,17 +104,22 @@ INSERT INTO `droit` (`idDroit`, `niveau`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `imageproduit` (
-  `idImageProduit` int(11) NOT NULL,
-  `cheminImage` varchar(25) NOT NULL,
-  `idProduit` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `idImageProduit` int(11) NOT NULL AUTO_INCREMENT,
+  `cheminImage` varchar(255) NOT NULL,
+  `idProduit` int(11) NOT NULL,
+  PRIMARY KEY (`idImageProduit`),
+  KEY `fk_imageProduit_produit` (`idProduit`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `imageproduit`
 --
 
 INSERT INTO `imageproduit` (`idImageProduit`, `cheminImage`, `idProduit`) VALUES
-(1, './back/images/Desert.jpg', 1);
+(1, './back/images/Desert.jpg', 1),
+(2, './back/images/Koala.jpg', 1),
+(4, './back/images/058313496be40e31b507f602ffdd229d.jpg', 3),
+(7, './back/images/0677cc764bc0561826374db2a71ad4ef.jpg', 6);
 
 -- --------------------------------------------------------
 
@@ -115,20 +128,24 @@ INSERT INTO `imageproduit` (`idImageProduit`, `cheminImage`, `idProduit`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `produit` (
-  `idProduit` int(11) NOT NULL,
+  `idProduit` int(11) NOT NULL AUTO_INCREMENT,
   `nomProduit` varchar(25) NOT NULL,
   `prixProduit` float NOT NULL,
   `description` varchar(50) NOT NULL,
   `stock` int(11) NOT NULL,
-  `idTheme` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `idTheme` int(11) NOT NULL,
+  PRIMARY KEY (`idProduit`),
+  KEY `fk_produit_theme` (`idTheme`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `produit`
 --
 
 INSERT INTO `produit` (`idProduit`, `nomProduit`, `prixProduit`, `description`, `stock`, `idTheme`) VALUES
-(1, 'test', 5.99, 'test de produit', 5, 1);
+(1, 'test', 5.99, 'test de produit', 5, 1),
+(3, 'Test produit 2', 600, '', 10, 8),
+(6, 'Test produit 3', 200, 'test', 0, 7);
 
 -- --------------------------------------------------------
 
@@ -138,8 +155,17 @@ INSERT INTO `produit` (`idProduit`, `nomProduit`, `prixProduit`, `description`, 
 
 CREATE TABLE IF NOT EXISTS `produit_tag` (
   `idProduit` int(11) NOT NULL DEFAULT '0',
-  `idTag` int(11) NOT NULL DEFAULT '0'
+  `idTag` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`idProduit`,`idTag`),
+  KEY `fk_produitTag_tag` (`idTag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `produit_tag`
+--
+
+INSERT INTO `produit_tag` (`idProduit`, `idTag`) VALUES
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -148,10 +174,19 @@ CREATE TABLE IF NOT EXISTS `produit_tag` (
 --
 
 CREATE TABLE IF NOT EXISTS `tag` (
-  `idTag` int(11) NOT NULL,
+  `idTag` int(11) NOT NULL AUTO_INCREMENT,
   `libelleTag` varchar(25) DEFAULT NULL,
-  `idTypeTag` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `idTypeTag` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idTag`),
+  KEY `fk_tag_typeTag` (`idTypeTag`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `tag`
+--
+
+INSERT INTO `tag` (`idTag`, `libelleTag`, `idTypeTag`) VALUES
+(1, 'test_tag', 3);
 
 -- --------------------------------------------------------
 
@@ -160,9 +195,11 @@ CREATE TABLE IF NOT EXISTS `tag` (
 --
 
 CREATE TABLE IF NOT EXISTS `theme` (
-  `idTheme` int(11) NOT NULL,
+  `idTheme` int(11) NOT NULL AUTO_INCREMENT,
   `libelleTheme` varchar(25) NOT NULL,
-  `idDomaine` int(11) NOT NULL
+  `idDomaine` int(11) NOT NULL,
+  PRIMARY KEY (`idTheme`),
+  KEY `fk_theme_domaine` (`idDomaine`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
@@ -188,8 +225,9 @@ INSERT INTO `theme` (`idTheme`, `libelleTheme`, `idDomaine`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `typetag` (
-  `idTypeTag` int(11) NOT NULL,
-  `libelleTypeTag` varchar(25) NOT NULL
+  `idTypeTag` int(11) NOT NULL AUTO_INCREMENT,
+  `libelleTypeTag` varchar(25) NOT NULL,
+  PRIMARY KEY (`idTypeTag`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
@@ -208,9 +246,11 @@ INSERT INTO `typetag` (`idTypeTag`, `libelleTypeTag`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `typeuser` (
-  `idTypeUser` int(11) NOT NULL,
+  `idTypeUser` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(25) NOT NULL,
-  `idDroit` int(11) NOT NULL
+  `idDroit` int(11) NOT NULL,
+  PRIMARY KEY (`idTypeUser`),
+  KEY `fk_typeUser_droit` (`idDroit`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
@@ -228,13 +268,16 @@ INSERT INTO `typeuser` (`idTypeUser`, `libelle`, `idDroit`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `idUser` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(25) NOT NULL,
   `mdp` varchar(1000) NOT NULL,
   `idTypeUser` int(11) NOT NULL DEFAULT '2',
   `nom` varchar(30) NOT NULL,
-  `prenom` varchar(30) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `prenom` varchar(30) NOT NULL,
+  PRIMARY KEY (`idUser`),
+  UNIQUE KEY `login_UNIQUE` (`login`),
+  KEY `fk_user_typeUser` (`idTypeUser`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `user`
@@ -242,149 +285,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`idUser`, `login`, `mdp`, `idTypeUser`, `nom`, `prenom`) VALUES
 (1, 'rayms', '$2y$10$pySPADvrGAGoq2Pom2h/meZkcCDwQdQSARgMU8etIim9aEr.4jOwy', 1, 'Laffuge', 'Rémy'),
-(2, 'admin', '$2y$10$pySPADvrGAGoq2Pom2h/meZkcCDwQdQSARgMU8etIim9aEr.4jOwy', 1, 'admin', 'admin');
+(2, 'admin', '$2y$10$pySPADvrGAGoq2Pom2h/meZkcCDwQdQSARgMU8etIim9aEr.4jOwy', 1, 'admin', 'admin'),
+(3, 'abon', '$2y$10$qpaNvKclSzdgYoEnURG3cu51.AJ9Xi3gfbO9stUxKPxldSeXHf9KK', 1, 'Bon', 'Adrien');
 
---
--- Index pour les tables exportées
---
-
---
--- Index pour la table `commande`
---
-ALTER TABLE `commande`
-  ADD PRIMARY KEY (`idCommande`),
-  ADD UNIQUE KEY `commande_idCommande_uindex` (`idCommande`),
-  ADD UNIQUE KEY `idUser_UNIQUE` (`idUser`);
-
---
--- Index pour la table `commande_produit`
---
-ALTER TABLE `commande_produit`
-  ADD PRIMARY KEY (`idProduit`,`idCommande`),
-  ADD KEY `fk_commandeProduit_commande` (`idCommande`);
-
---
--- Index pour la table `domaine`
---
-ALTER TABLE `domaine`
-  ADD PRIMARY KEY (`idDomaine`);
-
---
--- Index pour la table `droit`
---
-ALTER TABLE `droit`
-  ADD PRIMARY KEY (`idDroit`);
-
---
--- Index pour la table `imageproduit`
---
-ALTER TABLE `imageproduit`
-  ADD PRIMARY KEY (`idImageProduit`),
-  ADD KEY `fk_imageProduit_produit` (`idProduit`);
-
---
--- Index pour la table `produit`
---
-ALTER TABLE `produit`
-  ADD PRIMARY KEY (`idProduit`),
-  ADD KEY `fk_produit_theme` (`idTheme`);
-
---
--- Index pour la table `produit_tag`
---
-ALTER TABLE `produit_tag`
-  ADD PRIMARY KEY (`idProduit`,`idTag`),
-  ADD KEY `fk_produitTag_tag` (`idTag`);
-
---
--- Index pour la table `tag`
---
-ALTER TABLE `tag`
-  ADD PRIMARY KEY (`idTag`),
-  ADD KEY `fk_tag_typeTag` (`idTypeTag`);
-
---
--- Index pour la table `theme`
---
-ALTER TABLE `theme`
-  ADD PRIMARY KEY (`idTheme`),
-  ADD KEY `fk_theme_domaine` (`idDomaine`);
-
---
--- Index pour la table `typetag`
---
-ALTER TABLE `typetag`
-  ADD PRIMARY KEY (`idTypeTag`);
-
---
--- Index pour la table `typeuser`
---
-ALTER TABLE `typeuser`
-  ADD PRIMARY KEY (`idTypeUser`),
-  ADD KEY `fk_typeUser_droit` (`idDroit`);
-
---
--- Index pour la table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`idUser`),
-  ADD UNIQUE KEY `login_UNIQUE` (`login`),
-  ADD KEY `fk_user_typeUser` (`idTypeUser`);
-
---
--- AUTO_INCREMENT pour les tables exportées
---
-
---
--- AUTO_INCREMENT pour la table `commande`
---
-ALTER TABLE `commande`
-  MODIFY `idCommande` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `domaine`
---
-ALTER TABLE `domaine`
-  MODIFY `idDomaine` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT pour la table `droit`
---
-ALTER TABLE `droit`
-  MODIFY `idDroit` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT pour la table `imageproduit`
---
-ALTER TABLE `imageproduit`
-  MODIFY `idImageProduit` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT pour la table `produit`
---
-ALTER TABLE `produit`
-  MODIFY `idProduit` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT pour la table `tag`
---
-ALTER TABLE `tag`
-  MODIFY `idTag` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `theme`
---
-ALTER TABLE `theme`
-  MODIFY `idTheme` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
---
--- AUTO_INCREMENT pour la table `typetag`
---
-ALTER TABLE `typetag`
-  MODIFY `idTypeTag` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT pour la table `typeuser`
---
-ALTER TABLE `typeuser`
-  MODIFY `idTypeUser` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT pour la table `user`
---
-ALTER TABLE `user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- Contraintes pour les tables exportées
 --
@@ -418,8 +321,8 @@ ALTER TABLE `produit`
 -- Contraintes pour la table `produit_tag`
 --
 ALTER TABLE `produit_tag`
-  ADD CONSTRAINT `fk_produitTag_tag` FOREIGN KEY (`idTag`) REFERENCES `tag` (`idTag`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_produitTag_produit` FOREIGN KEY (`idProduit`) REFERENCES `produit` (`idProduit`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_produitTag_produit` FOREIGN KEY (`idProduit`) REFERENCES `produit` (`idProduit`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_produitTag_tag` FOREIGN KEY (`idTag`) REFERENCES `tag` (`idTag`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `tag`

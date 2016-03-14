@@ -18,7 +18,7 @@
     </div>
 
     <div class="col-lg-6">
-        <form method="post" action="index.php?route=ajout_panier">
+        <form method="post" action="../../theWood/back/Controllers/C_ajout_panier.php">
         <table class="table table-bordered">
             <tr>
                 <td>Référence</td>
@@ -38,7 +38,14 @@
             </tr>
         </table>
         </form>
-
+        <?php if(isset($_SESSION["overstock"]) && $_SESSION["overstock"] != "")
+        {
+        ?>
+            <div class="col-lg-12 alert alert-danger"><?php echo $_SESSION["overstock"]; ?></div>
+        <?php
+            unset($_SESSION["overstock"]);
+        }
+        ?>
     </div>
 
     <div class="modal fade" id="modal-id">
