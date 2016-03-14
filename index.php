@@ -10,7 +10,7 @@ session_start();
 include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
 
 //Définition d'un token pour la sécurité'
-$connexion_token = md5(uniqid('Z85qP$9A5<8gxù', true));
+$connexion_token = hash('sha512', uniqid('Z85qP$9A5<8gxù', true));
 $_SESSION['connexion_token'] = $connexion_token;
 ?>
 <!DOCTYPE html>
@@ -34,6 +34,8 @@ $_SESSION['connexion_token'] = $connexion_token;
     <script src="front\js\jquery.js"></script>
     <!-- Bootstrap -->
     <script src="front\js\bootstrap.min.js"></script>
+    <!--Captcha-->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 
 </head>
 <body>
@@ -127,10 +129,10 @@ $_SESSION['connexion_token'] = $connexion_token;
                 <form class="navbar-form navbar-right" method="post"
                       action="back/Controllers/C_connexion_utilisateur.php">
                     <div class="form-group">
-                        <input name="login" type="text" placeholder="Login" class="form-control">
+                        <input name="login" type="text" placeholder="Login" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <input name="mdp" type="password" placeholder="Password" class="form-control">
+                        <input name="mdp" type="password" placeholder="Password" class="form-control" required>
                     </div>
                     <input id="connexion_token" name="connexion_token" type="hidden" value="<?php echo $_SESSION['connexion_token'];?>">
                     <button type="submit" class="btn btn-success">Connexion</button>
