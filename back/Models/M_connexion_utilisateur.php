@@ -21,6 +21,9 @@ function connexion_utilisateur($utilisateur)
     $stmt->bindParam(':login', $utilisateur['login'], PDO::PARAM_STR);
     $stmt->execute();
     $registered_utilisateur = $stmt->fetch(PDO::FETCH_OBJ);
+    if ($registered_utilisateur == false) {
+        return false;
+    }
     if (password_verify($utilisateur['mdp'], $registered_utilisateur->mdp)) {
         return $registered_utilisateur;
     } else {
