@@ -7,7 +7,7 @@
  */
 
 //Définition d'un token pour la sécurité'
-$form_token = md5(uniqid('auth', true));
+$form_token = hash('sha512',uniqid('auth', true));
 $_SESSION['form_token'] = $form_token;
 //Définition de la taille max des fichiers
 $_SESSION['MAX_FILE_SIZE'] = 1048576;

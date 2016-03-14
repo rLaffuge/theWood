@@ -10,7 +10,7 @@ session_start();
 include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Controllers/C_accueil.php";
 
 //Définition d'un token pour la sécurité'
-$connexion_token = md5(uniqid('Z85qP$9A5<8gxù', true));
+$connexion_token = hash('sha512', uniqid('Z85qP$9A5<8gxù', true));
 $_SESSION['connexion_token'] = $connexion_token;
 ?>
 <!DOCTYPE html>

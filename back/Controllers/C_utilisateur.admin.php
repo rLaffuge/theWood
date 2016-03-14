@@ -7,7 +7,7 @@
  */
 
 //Définition d'un token pour la sécurité'
-$connexion_token = md5(uniqid('5rDM6y8OP$9A5<8gxù', true));
+$connexion_token = hash('sha512',uniqid('5rDM6y8OP$9A5<8gxù', true));
 $_SESSION['utilisateur_token'] = $connexion_token;
 
 include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Models/M_utilisateur.php";

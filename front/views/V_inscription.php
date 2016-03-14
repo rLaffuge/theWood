@@ -6,10 +6,9 @@
  * Time: 09:56
  */
 
-$form_token = md5(uniqid('auth', true));
+$form_token = hash('sha512',uniqid('auth', true));
 $_SESSION['form_token'] = $form_token;
 $siteKey = '6Le1xRoTAAAAAFukqKtn2EWIhix6FJSU7V5bkema';
-
 ?>
 <form action="back/Controllers/C_ajout_utilisateur.php" method="post" role="form" class="col-lg-offset-4 col-lg-4">
     <legend>Inscription</legend>
