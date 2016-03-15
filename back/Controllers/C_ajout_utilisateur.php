@@ -7,23 +7,6 @@
  */
 session_start();
 
-//Captcha
-require $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Models/recaptchalib.php";
-$secret = '6Le1xRoTAAAAADj2zeu4CnGiztv4esJL1BC4w_zc';
-
-$reCaptcha = new ReCaptcha($secret);
-if (isset($_POST["g-recaptcha-response"])) {
-    $resp = $reCaptcha->verifyResponse(
-        $_SERVER["REMOTE_ADDR"],
-        $_POST["g-recaptcha-response"]
-    );
-    if ($resp != null && $resp->success) {
-        escape("CAPTCHA OK");
-    } else {
-        escape("CAPTCHA incorrect");
-    }
-}
-
 include $_SERVER["DOCUMENT_ROOT"] . "/theWood/back/Models/M_ajout_utilisateur.php";
 
 

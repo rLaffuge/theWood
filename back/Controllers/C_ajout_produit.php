@@ -40,7 +40,7 @@ if (!isset($_POST['nom']) && !isset($_POST['theme']) && !isset($_POST['domaine']
         $idProduit = ajout_produit($produit);
         $count_file = count($_FILES["images"]["name"]);
         for ($i = 0; $i < $count_file; $i++) {
-            $image_unique = hash('sha512', uniqid('image', true));
+            $image_unique = md5(uniqid('image', true));
             $target_file = $target_dir . basename($_FILES["images"]["name"][$i]);
             $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
             $check = getimagesize($_FILES["images"]["tmp_name"][$i]);
