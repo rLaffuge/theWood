@@ -153,7 +153,7 @@ $_SESSION['connexion_token'] = $connexion_token;
         if (isset($route)) {
             switch ($route) {
                 case "commande":
-                    include("back/route/commande.admin.php");
+                    include("back/route/commande.php");
                     break;
                 case "produits":
                     include("back/route/produits.php");

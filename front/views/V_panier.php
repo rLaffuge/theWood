@@ -18,8 +18,9 @@
                           {
                               if(intval($pp["id"]) == $p->idProduit)
                               {
-                                  echo "<td>".$pp["nb"]."</td>";
-                                  echo "<td>".intval($pp["nb"])*$p->prixProduit." €</td>";
+                                  echo "<td><input type='number' min='1' value='".$pp["nb"]."' class='nb_panier' id='article".$pp["id"]."'></td>";
+                                  echo "<td class='prixpanier'>".intval($pp["nb"])*$p->prixProduit." €</td>";
+                                  echo "<td><button class='btn btn-danger suppr_article' id='".$pp["id"]."'><span class='glyphicon glyphicon-remove'></span></button></td>";
                                   $prix_total = $prix_total + intval($pp["nb"])*$p->prixProduit;
                               }
 
@@ -29,4 +30,11 @@
         <?php } ?>
     </tbody>
 </table>
-<div class="col-lg-12"><span class="pull-right"> Prix Total : <?php echo $prix_total; ?> €</span></div>
+<div class="col-lg-12"><span class="pull-right"> Prix Total : <span id="prixTotal"><?php echo $prix_total; ?></span> €</span></div>
+<div class="col-lg-12"><hr></div>
+<div class="col-lg-12">
+    <form method="post" action="index.php?route=commande">
+        <button type="submit" class="pull-right btn btn-success"><span>Commander</span></button>
+    </form>
+</div>
+<div class="col-lg-12 alert alert-danger" id="alert_panier"></div>
