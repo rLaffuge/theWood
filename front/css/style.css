@@ -73,3 +73,7 @@
     font-style: italic;
     color:grey;
 }
+
+#alert_panier{
+    display: none;
+}
