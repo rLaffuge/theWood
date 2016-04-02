@@ -103,6 +103,7 @@ $_SESSION['connexion_token'] = $connexion_token;
                             <ul class="dropdown-menu">
                                 <li class="dropdown-header">Produits</li>
                                 <li><a href="index.php?route=ajout_produit">Ajouter produit</a></li>
+                                <li><a href="index.php?route=modif_produit">Modification produit</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-header">Commandes</li>
                                 <li><a href="index.php?route=commandes">Consulter commandes</a></li>
@@ -166,6 +167,18 @@ $_SESSION['connexion_token'] = $connexion_token;
                     if (isset($_SESSION['utilisateur']->niveau)) {
                         if ($_SESSION['utilisateur']->niveau == 1) {
                             include("./back/route/produit.admin.php");
+                        }else{
+                            include("./back/route/pasDroit.php");
+                        }
+                    }else{
+                        include("back/route/pasDroit.php");
+                    }
+                    break;
+                case "modif_produit":
+                    //Verification des droits
+                    if (isset($_SESSION['utilisateur']->niveau)) {
+                        if ($_SESSION['utilisateur']->niveau == 1) {
+                            include("./back/route/modifProduit.admin.php");
                         }else{
                             include("./back/route/pasDroit.php");
                         }
@@ -267,6 +280,7 @@ $_SESSION['connexion_token'] = $connexion_token;
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Rechercher</button>
                 </div>
+                
             </form>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
