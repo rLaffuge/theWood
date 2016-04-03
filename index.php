@@ -31,9 +31,9 @@ $_SESSION['connexion_token'] = $connexion_token;
     <link href="./front/css/style.css" rel="stylesheet">
 
     <!-- jQuery -->
-    <script src="front\js\jquery.js"></script>
+    <script src="front/js/jquery.js"></script>
     <!-- Bootstrap -->
-    <script src="front\js\bootstrap.min.js"></script>
+    <script src="front/js/bootstrap.min.js"></script>
     <!--Captcha-->
     <script src='https://www.google.com/recaptcha/api.js'></script>
 
@@ -286,6 +286,6 @@ $_SESSION['connexion_token'] = $connexion_token;
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<script src="./front/js/app.js"></script>
+<script src="front/js/app.js"></script>
 </body>
 </html>

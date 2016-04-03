@@ -5,6 +5,7 @@
  * Date: 15/03/2016
  * Time: 16:35
  */
+    session_start();
 
     if(isset($_SESSION["utilisateur"])) {
 
@@ -18,28 +19,28 @@
             {
                 if($erreur == 1)
                 {
-                    $resultat = "Le produit ".$produit_erreur." n'est plus disponible dans les quantités demandées - quantité en stock : ".$stock_erreur;
+                    $_SESSION["resultat_commande"] = "Le produit ".$produit_erreur." n'est plus disponible dans les quantités demandées - quantité en stock : ".$stock_erreur;
                 }
                 else if($erreur == 2)
                 {
-                    $resultat = "Erreur lors de la commande - Merci de rééssayer ultérieurement";
+                    $_SESSION["resultat_commande"] = "Erreur lors de la commande - Merci de rééssayer ultérieurement";
                 }
             }
             else
             {
                 unset($_COOKIE["cart"]);
-                setcookie("cart","",time()+1);
-                $resultat = "Votre commande a bien été enregistrée";
+                setcookie("cart","",time()+1,'/',null,false,true);
+                $_SESSION["resultat_commande"] = "Votre commande a bien été enregistrée";
             }
         }
         else
         {
-            $resultat = "Le panier validé était vide - Merci d'ajouter au moins un article avant de commander";
+            $_SESSION["resultat_commande"] = "Le panier validé était vide - Merci d'ajouter au moins un article avant de commander";
         }
     }
     else
     {
-        $resultat = "Vous devez être connecté pour commander";
+        $_SESSION["resultat_commande"] = "Vous devez être connecté pour commander";
     }
 
     include $_SERVER["DOCUMENT_ROOT"] . "/theWood/front/views/V_commande.php";

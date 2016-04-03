@@ -29,7 +29,7 @@
                     <td><?php echo $c->idCommande; ?></td>
                     <td><?php echo $c->nom . ' ' . $c->prenom; ?></td>
                     <td><?php echo $c->dateCommande; ?></td>
-                    <td><?php echo $c->prix; ?></td>
+                    <td><?php echo $c->prix; ?> €</td>
                 </tr>
                 <?php
             }

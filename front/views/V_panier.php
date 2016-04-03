@@ -33,7 +33,7 @@
 <div class="col-lg-12"><span class="pull-right"> Prix Total : <span id="prixTotal"><?php echo $prix_total; ?></span> €</span></div>
 <div class="col-lg-12"><hr></div>
 <div class="col-lg-12">
-    <form method="post" action="index.php?route=commande">
+    <form method="post" action="../../theWood/back/Controllers/C_commande.php">
         <button type="submit" class="pull-right btn btn-success"><span>Commander</span></button>
     </form>
 </div>

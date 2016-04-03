@@ -66,7 +66,7 @@
             }
 
             $p = serialize($panier);
-            setcookie("cart",$p,time()+86400*2,'/theWood/',null,false,true);
+            setcookie("cart",$p,time()+86400*2,'/',null,false,true);
 
         }
         else

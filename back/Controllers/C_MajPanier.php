@@ -35,7 +35,7 @@
                 {
                     $p["nb"] = $nb;
                     $p = serialize($panier);
-                    setcookie("cart",$p,time()+86400*2,'/theWood/',null,false,true);
+                    setcookie("cart",$p,time()+86400*2,'/',null,false,true);
                     echo json_encode((object)array("ok" => "1" ,"prix" => $nb*$valeur->prixProduit));
                 }
             }

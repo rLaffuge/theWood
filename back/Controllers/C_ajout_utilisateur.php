@@ -18,16 +18,16 @@ if (!isset($_POST['login'], $_POST['mdp'], $_POST['nom'], $_POST['prenom'], $_PO
     //On check le Token
     $message = 'Formulaire invalide!';
     escape($message);
-} elseif (strlen($_POST['login']) < 4 || strlen($_POST['login']) > 20) {
+} elseif (strlen($_POST['login']) < 5 || strlen($_POST['login']) > 20) {
     $message = 'Le login doit être composé de 5 caractères min et 20 caractères max';
     escape($message);
-} elseif (strlen($_POST['mdp']) < 4 || strlen($_POST['mdp']) > 20) {
+} elseif (strlen($_POST['mdp']) < 5 || strlen($_POST['mdp']) > 20) {
     $message = 'Le mot de passe doit être composé de 5 caractères min et 20 caractères max';
     escape($message);
-} elseif (strlen($_POST['nom']) < 4 || strlen($_POST['nom']) > 20) {
+} elseif (strlen($_POST['nom']) < 3 || strlen($_POST['nom']) > 20) {
     $message = 'Le nom doit être composé de 5 caractères min et 20 caractères max';
     escape($message);
-} elseif (strlen($_POST['prenom']) < 4 || strlen($_POST['prenom']) > 20) {
+} elseif (strlen($_POST['prenom']) < 3 || strlen($_POST['prenom']) > 20) {
     $message = 'Le prenom doit être composé de 5 caractères min et 20 caractères max';
     escape($message);
 } else {

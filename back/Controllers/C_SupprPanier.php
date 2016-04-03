@@ -22,12 +22,12 @@
         if(empty($panier))
         {
             unset($_COOKIE["cart"]);
-            setcookie("cart","",time()+1,'/theWood/',null,false,true);
+            setcookie("cart","",time()+1,'/',null,false,true);
         }
         else
         {
             $p = serialize($panier);
-            setcookie("cart",$p,time()+86400*2,'/theWood/',null,false,true);
+            setcookie("cart",$p,time()+86400*2,'/',null,false,true);
         }
 
 

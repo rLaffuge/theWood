@@ -9,7 +9,7 @@
 $form_token = hash('sha512',uniqid('auth', true));
 $_SESSION['form_token'] = $form_token;
 ?>
-<form action="back/Controllers/C_ajout_utilisateur.php" method="post" role="form" class="col-lg-offset-4 col-lg-4">
+<form action="./back/Controllers/C_ajout_utilisateur.php" method="post" role="form" class="col-lg-offset-4 col-lg-4">
     <legend>Inscription</legend>
 
     <div class="form-group">
