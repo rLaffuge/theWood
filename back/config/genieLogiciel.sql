@@ -334,7 +334,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`idUser`, `login`, `mdp`, `idTypeUser`, `nom`, `prenom`) VALUES
 (1, 'rayms', '$2y$10$pySPADvrGAGoq2Pom2h/meZkcCDwQdQSARgMU8etIim9aEr.4jOwy', 1, 'Laffuge', 'Rémy'),
 (6, 'Admin', '$2y$10$WRaAR9oDmxNLFYnWGRNNGebX31F8ChYsOdVw9.iDOjYwd1gTza9u2', 1, 'Admin', 'Admin'),
-(7, 'Utilisateur', '$2y$10$jpJgGUmBlMfYuIBFAaL4KOvbmDuNBtU7xEKasRYcn/vtGJxQU6P7G', 2, 'User', 'User');
+(5, 'Utilisateur', '$2y$10$jpJgGUmBlMfYuIBFAaL4KOvbmDuNBtU7xEKasRYcn/vtGJxQU6P7G', 2, 'User', 'User');
 
 --
 -- Contraintes pour les tables exportées
